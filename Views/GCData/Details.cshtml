@@ -1,0 +1,25 @@
+﻿@model GCOnline.Models.Sequence
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Sequence</legend>
+
+    <div class="display-label">SequenceName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SequenceName)
+    </div>
+
+    <div class="display-label">Uploaded</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Uploaded)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.SequenceID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

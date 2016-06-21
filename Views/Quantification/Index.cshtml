@@ -1,0 +1,179 @@
+﻿@model GCOnline.Models.DUMP
+
+@{
+    ViewBag.Title = "GCOnline Quantification";
+     
+    string[] standardsArray = {
+        "C10_FFA",
+        "C12_FFA",
+        "C14_FFA",
+        "C16_FFA",
+        "C18_FFA",
+        "C12_MAG",
+        "C20_FFA",
+        "C14_MAG",
+        "C16_MAG",
+        "C18_MAG",
+        "C12_DAG",
+        "C14_DAG",
+        "C11_TAG",
+        "C16_DAG",
+        "C12_TAG",
+        "C18_DAG",
+        "C14_TAG",
+        "C16_TAG",
+        "C17_TAG",
+        "C18_TAG",
+        "C20_TAG",
+        "C22_TAG",
+        "FFA",
+        "MAG",
+        "DAG",
+        "TAG"
+    };
+}
+
+<h2>GCOnline: Quantification Management</h2>
+<p>From here you can create new quantification ranges, or quantify runs.</p>
+
+
+<p>Create a new Quantification Range: <a href="javascript:void(0);" onclick="common.showNewQuantTable()">Show Table</a></p>
+
+<div class="new_quant_range">
+
+    <table>
+        <tr>
+            <th>Standard</th><th>Retention Time: Start (mm:ss)</th><th>Retention Time: End (mm:ss)</th>
+        </tr>
+
+        @for (int i = 0; i < standardsArray.Length; i++)
+        {
+            <tr>
+                <td>@standardsArray[i]</td>
+                <td><input class="rt_start" type='text' id="@standardsArray[i]" name='RT_Start'/></td>
+                <td><input class="rt_end" type='text' id="@standardsArray[i]" name='RT_End'/></td>
+            </tr>
+        }
+
+    </table>
+    <div class='create_quant'>
+        <input type='text' onfocus="$(this).val('');" id='new_quant_range_name' value='Range Name'/>
+        <a href='javascript:void(0);' onclick='common.createNewQuantificationRange()'>Create</a>
+    </div>
+</div>
+
+<div class="left" style="margin-right:20px;">
+    <p>Select a Calibration:</p>
+    <table id ="cali_list">
+        <tr>
+            <th></th>
+            <th>
+                Calibration List
+            </th>
+        </tr>
+    @foreach (var item in Model.caliList) {
+        <tr>
+            <td>
+                <input type="checkbox" id="@Html.DisplayFor(modelItem => item.CalibrationName)" class="select_cali" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CalibrationName)
+            </td>
+        </tr>
+    }
+    </table>
+</div>
+
+<div class="left" style="margin-right:20px;">
+    <p>Select a Quantification Range:</p>
+    <table id ="range_list">
+        <tr>
+            <th></th>
+            <th>
+                Quantification Range List
+            </th>
+        </tr>
+    @foreach (var item in Model.rangeList)
+    {
+        <tr>
+            <td>
+                <input type="checkbox" id="@Html.DisplayFor(modelItem => item.RangeID)" class="select_range" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RangeName)
+            </td>
+        </tr>
+    }
+    </table>
+</div>
+
+<div class="left">
+    <p>Select runs to quantify:</p>
+    <table>
+        <tr>
+            <th></th>
+            <th>
+                Run Name
+            </th>
+            <th>
+                Sequence Name
+            </th>
+            <th>
+                Dilution (mL)
+            </th>
+            <th>
+                CDW (mg)
+            </th>
+            <th>
+                Sample Volume (mL)
+            </th>
+            <th>
+                Biomass (C-mmol)
+            </th>
+            <th>
+                Cell Count (Cells/mL)
+            </th>
+            <th>
+                Group
+            </th>
+        </tr>
+
+    @{
+        int tabindex = 1;
+        int count = 1; 
+        int group = 1;
+        string sequence_name = "";
+    }
+
+    @foreach (var item in Model.runList)
+    {
+        if (sequence_name != item.SequenceName) { sequence_name = item.SequenceName;  group = 1; }
+        
+        <tr>
+            <td>
+                <input type="checkbox" id="@Html.DisplayFor(modelItem => item.RunID)" checked="checked" class="run_checkbox" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RunName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SequenceName)
+            </td>
+            <td><input type="text" name="@Html.DisplayFor(modelItem => item.RunName)" id="@Html.DisplayFor(modelItem => item.RunID)_dilution" value="@Html.DisplayFor(modelItem => item.Dilution)" /></td>
+            <td><input type="text" id="@Html.DisplayFor(modelItem => item.RunID)_biomass" value="@Html.DisplayFor(modelItem => item.CDW)" tabindex="@tabindex"/></td>
+            <td><input type="text" id="@Html.DisplayFor(modelItem => item.RunID)_sample_volume" value="@Html.DisplayFor(modelItem => item.SampleVolume)" /></td>
+            <td><input type="text" id="@Html.DisplayFor(modelItem => item.RunID)_biomass_cmmol" value="@Html.DisplayFor(modelItem => item.BMCmmol)" tabindex="@tabindex + 1" /></td>
+            <td><input type="text" id="@Html.DisplayFor(modelItem => item.RunID)_cell_count" value="@Html.DisplayFor(modelItem => item.CellCount)" tabindex="@tabindex + 2"/></td>
+            <td><input type="text" id="@Html.DisplayFor(modelItem => item.RunID)_group" value="@group" /></td>
+        </tr>
+        
+        if (count % 3 == 0) { group++; }
+
+        count++;
+        tabindex = tabindex + 3;
+    }
+
+    </table>
+    <a href='javascript:void(0);' onclick='common.quantify()'>Quantify</a>
+</div>
+<div class="clear"></div>

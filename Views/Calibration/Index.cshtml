@@ -1,0 +1,50 @@
+﻿@model IEnumerable<GCOnline.Models.Calibration>
+
+@{
+    ViewBag.Title = "GCOnline Calibration";
+}
+
+<h2>GCOnline: Calibration Management</h2>
+<p>From here you can manage your GC calibrations:  View previously saved calibrations, or delete unwated data.</p>
+
+
+<table>
+    <tr>
+        <th>
+            Calibration Name
+        </th>
+        <th>
+            From Sequence
+        </th>
+        <th>
+            Date Created
+        </th>
+        <th>
+            Default
+        </th>
+        <th></th>
+    </tr>
+
+@{ int count = Model.Count(); }
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CalibrationName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SequenceName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreated)
+        </td>
+        <td>
+            @if (item.Current == 1) { <span>X</span> }
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { name = item.CalibrationName }) |
+            @Html.ActionLink("Delete", "Delete", new { name = item.CalibrationName })
+        </td>
+    </tr>
+}
+
+</table>

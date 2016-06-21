@@ -1,0 +1,28 @@
+﻿@model GCOnline.Models.Sequence
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Sequence</legend>
+
+    <div class="display-label">SequenceName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SequenceName)
+    </div>
+
+    <div class="display-label">Uploaded</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Uploaded)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

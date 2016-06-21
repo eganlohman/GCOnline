@@ -1,0 +1,64 @@
+﻿@model IEnumerable<GCOnline.Models.Sequence>
+
+@{
+    ViewBag.Title = "GCOnline Data Management";
+}
+
+<script src="@Url.Content("~/Scripts/sequence.js")" type="text/javascript"></script>
+
+<h2>GCOnline: Data Management</h2>
+<p>From here you can manage your GC data:  Upload new sequences, view previously saved sequences and runs, or delete unwated data.</p>
+
+@using (Html.BeginForm("Create", "GCData", System.Web.Mvc.FormMethod.Post, new { enctype="multipart/form-data"})) {
+    
+    <fieldset>
+        <legend>Sequence Upload</legend>
+
+      <input type="file" name="file" id="file" />
+
+      <input type="submit" value="Upload" />
+ 
+    </fieldset>
+}
+
+@using (Html.BeginForm("DoSomething", "GCData", System.Web.Mvc.FormMethod.Post, new { id="secondForm" }))
+{
+    <table>
+        <tr>
+            <th>
+                Sequence Name
+            </th>
+            <th>
+                # of Runs
+            </th>
+            <th>
+                Date Uploaded
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SequenceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfRuns)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Uploaded)
+            </td>
+            <td>
+                <input type="checkbox" id="@Html.DisplayFor(modelItem => item.SequenceID)" name="@Html.DisplayFor(modelItem => item.SequenceID)" class="sequences"/>
+            </td>
+        </tr>
+    }
+
+    </table>
+    <div style="margin:5px 0px 0px 191px;">
+        <a href="javascript:void(0);" onclick="sequence.submitAction('view')">View Runs</a> |
+        <a href="javascript:void(0);" onclick="sequence.submitAction('details')">Details</a> |
+        <a href="javascript:void(0);" onclick="sequence.submitAction('delete')">Delete</a> 
+    </div>
+}

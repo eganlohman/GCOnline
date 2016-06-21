@@ -1,0 +1,95 @@
+﻿.create_quant input 
+{
+    margin:10px 10px 0px 284px;
+    width:134px;
+}
+
+.new_quant_range 
+{
+    display:none;
+}
+
+.conc_container 
+{
+    display:none;
+    float:left;
+    margin-left: 10px;
+    
+}
+
+.cali_container 
+{
+    display:none;
+    background-color:White;
+}
+
+#caliName 
+{
+    font-size:10px;
+}
+
+.std_selector 
+{
+    float:left;
+}
+
+.std_col
+{
+    background-color:#bbbbff;
+    border: 1px solid #007755;
+    font-size:10px;
+    float:left; 
+    padding:1px;
+    text-align:center;
+}
+
+.std_row
+{
+    background-color:white;
+    border-top: 1px solid #007755;
+    font-size:10px;
+    text-align:center;
+    padding:1px;    
+}
+
+.t_left { text-align:left; }
+.t_right { text-align:right; }
+
+.standards_container 
+{ 
+    position:absolute; 
+    top:20px;
+    left:20px;
+    background:white;
+    display:none;
+    z-index:1000;
+}
+
+.standards_container table td 
+{
+    font-size:10px; 
+}
+
+#container 
+{
+    margin-bottom:30px;
+}
+
+.left 
+{
+    float:left;
+}
+
+.clear 
+{
+    clear:both;
+}
+
+.bold { font-weight:bold; }
+
+.chart_div 
+{
+    margin-bottom:10px;
+}
+
+.slider { margin-bottom: 20px; }

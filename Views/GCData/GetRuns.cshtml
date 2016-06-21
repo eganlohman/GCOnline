@@ -1,0 +1,64 @@
+﻿@model IEnumerable<IEnumerable<GCOnline.Models.Run>>
+
+@{
+    ViewBag.Title = "GCOnline: Sequence Runs";
+}
+
+<h2>Run List for Sequences: </h2>
+<ul>
+@foreach (var list in Model)
+{
+    <li>@list.ElementAt(0).SequenceName</li>  
+}
+ </ul>
+
+
+<div id="container">
+
+@using (Html.BeginForm("Index", "Quantification", System.Web.Mvc.FormMethod.Post, new { id = "quantify_form", enctype = "multipart/form-data" }))
+{
+    
+    <table class="std_selector">
+        <tr>
+            <th>
+                Run Name
+            </th>
+            <th>
+                Sequence Name
+            </th>
+            <th>
+                <input type="checkbox" onchange="common.selectAll(this)" />
+            </th>
+        </tr>
+
+    @foreach (var list in Model)
+    {
+        foreach (var item in list)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RunName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SequenceName)
+                </td>
+                <td>
+                    <input type="checkbox" class="cali_check" value="@Html.DisplayFor(modelItem => item.RunName)" id="@Html.DisplayFor(modelItem => item.RunID)" name="@Html.DisplayFor(modelItem => item.RunID)" />
+                </td>
+            </tr>
+        }
+    }
+        <tr>
+            <td>@Html.ActionLink("Back to List", "Index")</td>
+            <td>
+                <a href="javascript:void(0)" onclick="common.addtocali()">Create Cali</a>&nbsp;&nbsp;
+                <a href="javascript:void(0)" onclick="common.submitQuantification()">Quantify</a>
+            </td>
+        </tr>
+    </table>
+    <div class="conc_container"></div>
+    <div class="cali_container"></div>
+    <div class="standards_container"></div>
+    <div class="clear"></div>
+}
+</div>
